@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const arcR = RAD * 0.75;           // радіус петлі
         const offset = RAD + 10;     // відступ від центру вершини
 
-        // 1) кут вершини від центра кола
+
         const dx = nodeX - centerX;
         const dy = nodeY - centerY;
         let theta = Math.atan2(dy, dx) * 180 / Math.PI; // градуси
@@ -242,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ctx.fill();
             ctx.stroke();
             ctx.fillStyle = "#000";
-            ctx.font = "15px Arial";
+            ctx.font = "14px Times New Roman";
             ctx.textAlign = "center";
             ctx.textBaseline = "middle";
             ctx.fillText(i + 1, positions[i].x, positions[i].y);
@@ -264,6 +264,4 @@ document.addEventListener("DOMContentLoaded", () => {
         printMatrix(undirMatrix, "Undirected Matrix (Aundir)");
         drawGraph(undirMatrix, false);
     };
-
-    drawGraph(dirMatrix, true);
 });
