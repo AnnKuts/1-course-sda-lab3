@@ -2,14 +2,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
-//parametres
+    //parametres
     const seed = 4111;
     const n3 = 1;
     const n4 = 1;
     const n = 10 + n3;
     const k = 1.0 - n3 * 0.02 - n4 * 0.005 - 0.25; // 0.725
 
-//Park–Miller's algorythm
+   //Park–Miller's algorythm
     function genRand(seed) {
         const MOD = 2147483647;
         let val = seed % MOD;
@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const rand = genRand(seed);
 
-//matrix generation
+   //matrix generation
     function genDirMatrix(k) {
         const raw = Array.from({length: n}, () =>
             Array.from({length: n}, () => rand() * 2)
         );
         const dir = raw.map(row => row.map(v => (v * k >= 1 ? 1 : 0)));
 
-// If a bidirectional edge exists, randomly remove one arrow
+    //if a bidirectional edge exists, randomly remove one arrow
         for (let i = 0; i < n; i++) {
             for (let j = i + 1; j < n; j++) {
                 if (dir[i][j] && dir[j][i]) {
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return undir;
     }
 
-//console print
+   //console print
     function printMatrix(matrix, title) {
         console.log(`\n${title}:`);
         matrix.forEach(row => console.log(row.join(" ")));
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", () => {
             start = Math.PI / 4;
             end = -Math.PI / 4;
         }
-//into radians
+       //into radians
         const s = start * Math.PI / 180;
         const e = end * Math.PI / 180;
 
@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-//draw
+    //draw
     function drawGraph(matrix, directed) {
         ctx.clearRect(0, 0, w, h);
         ctx.strokeStyle = "#333";
@@ -253,11 +253,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const dirMatrix = genDirMatrix(k);
     const undirMatrix = genUndirMatrix(dirMatrix);
 
-    printMatrix(dirMatrix, "Directed Matrix (Adir)");
-    printMatrix(undirMatrix, "Undirected Matrix (Aundir)");
+    document.getElementById("btnDirected").onclick = () => {
+        console.clear();
+        printMatrix(dirMatrix, "Directed Matrix (Adir)");
+        drawGraph(dirMatrix, true);
+    };
 
-    document.getElementById("btnDirected").onclick = () => drawGraph(dirMatrix, true);
-    document.getElementById("btnUndirected").onclick = () => drawGraph(undirMatrix, false);
+    document.getElementById("btnUndirected").onclick = () => {
+        console.clear();
+        printMatrix(undirMatrix, "Undirected Matrix (Aundir)");
+        drawGraph(undirMatrix, false);
+    };
 
     drawGraph(dirMatrix, true);
 });
